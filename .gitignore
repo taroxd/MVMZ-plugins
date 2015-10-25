@@ -1,0 +1,16 @@
+/*
+!/js
+/js/*
+!/js/plugins
+
+!/.gitignore
+!/README.md
+
+# default plugins
+/js/plugins/AltMenuScreen.js
+/js/plugins/AltSaveScreen.js
+/js/plugins/EnemyBook.js
+/js/plugins/ItemBook.js
+/js/plugins/SimpleMsgSideView.js
+/js/plugins/TitleCommandPosition.js
+/js/plugins/WeaponSkill.js
