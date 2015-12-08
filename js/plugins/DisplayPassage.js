@@ -28,7 +28,7 @@
  *
  * @help This plugin does not provide plugin commands.
  *
- * Press Ctrl Key to display passage.
+ * Press Ctrl Key to display passage information.
  */
 
 void function() {

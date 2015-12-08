@@ -31,38 +31,41 @@ void function() {
         REGIONS[r] = false;
     });
 
-    // Advanced options:
-
-    // REGIONS[r] = function(regionId)
-    // When you are in region r,
-    // you can only go to regions where function(regionId) returns true.
-
-    // For example,
-    // Region 3 can only be entered from region 4.
-    // REGIONS[3] = function(r) { return r === 3 || r === 4; };
-
-    // You cannot walk between region 5 and region 6.
-    // REGIONS[5] = function(r) { return r !== 6 };
+    /* Advanced options:
+     *
+     * REGIONS[r] = function(regionId)
+     *
+     * The function determines whether it is possible
+     * to go to region `regionId' from region `r'.
+     * If the return value is true,
+     * then it is always possible regardless of the tile.
+     * If the return value is false,
+     * then it is always not possible regardless of the tile.
+     * Any other return value will leave the passage settings unchanged.
+     *
+     * For example,
+     * Region 3 can be entered from and only from region 4.
+     * And Tiles are always passable in region 3.
+     * REGIONS[3] = function(r) { return r === 3 || r === 4; };
+     *
+     * You cannot walk between region 5 and region 6.
+     * REGIONS[5] = function(r) { return r !== 6 && null };
+     */
 
     var enable = Object.keys(REGIONS).length > 0;
-
     if (!enable) return;
 
     var ip = Game_Map.prototype.isPassable;
     Game_Map.prototype.isPassable = function(x, y, d) {
         var settings = REGIONS[$gameMap.regionId(x, y)];
-        switch(typeof settings) {
-        case 'boolean':
-            return settings;
-        case 'function':
+        if (typeof(settings) === 'function') {
             var x2 = $gameMap.roundXWithDirection(x, d);
             var y2 = $gameMap.roundYWithDirection(y, d);
-            if (!settings($gameMap.regionId(x2, y2))) {
-                return false;
-            }
-            // no break intentionally
-        default:
-            return ip.call(this, x, y, d);
+            settings = settings($gameMap.regionId(x2, y2));
         }
+        if (typeof(settings) === 'boolean') {
+            return settings;
+        }
+        return ip.call(this, x, y, d);
     };
 }();
