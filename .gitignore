@@ -5,6 +5,7 @@
 
 !/.gitignore
 !/README.md
+!/LICENSE
 
 # default plugins
 /js/plugins/AltMenuScreen.js
