@@ -54,7 +54,7 @@ void function() {
     var assign = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
             var source = arguments[i];
-            for (key in source) {
+            for (var key in source) {
                 target[key] = source[key];
             }
         }
@@ -101,7 +101,7 @@ void function() {
 
         update: function() {
             ++this.t;
-            for (key in this) {
+            for (var key in this) {
                 if (key.startsWith(SAFE_UPDATE_NAME)) {
                     this[key](this.t, $gameSwitches, $gameVariables);
                 }
@@ -123,7 +123,7 @@ void function() {
         delete settings.hue;
         delete settings.smooth;
 
-        for (key in settings) {
+        for (var key in settings) {
             var value = settings[key];
 
             if (typeof(value) === 'string') {

@@ -17,7 +17,7 @@ void function() {
 
     var parameters = PluginManager.parameters('SkipTitle');
     var testOnly = parameters['Test Only'] !== 'false';
-    var enable = !testOnly || Utils.isOptionValid('test');
+    var enable = !testOnly || location.search === '?test';
 
     if (enable) {
         Scene_Boot.prototype.start = function() {

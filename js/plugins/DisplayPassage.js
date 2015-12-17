@@ -36,7 +36,7 @@ void function() {
     var parameters = PluginManager.parameters('DisplayPassage');
 
     var TEST_ONLY = parameters['Test Only'] !== 'false';
-    var enable = !TEST_ONLY || Utils.isOptionValid('test');
+    var enable = !TEST_ONLY || location.search === '?test';
 
     if (!enable) return;
 
