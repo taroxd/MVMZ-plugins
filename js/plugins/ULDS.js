@@ -39,12 +39,12 @@
  *
  * Here is an example:
  *
- * <ulds> {
- *   "name": "BlueSky",
- *   "x": "this.rx(t)",
- *   "y": 50,
- *   "loop": true
- * } </ulds>
+   <ulds> {
+     "name": "BlueSky",
+     "x": "this.rx(t)",
+     "y": 50,
+     "loop": true
+   } </ulds>
  *
  */
 
@@ -61,7 +61,6 @@ void function() {
         return target;
     };
 
-    var SAFE_UPDATE_NAME = '__update_ulds__';
     var RE = /<ulds>([^]*?)<\/ulds>/ig;
     var parameters = PluginManager.parameters('ULDS');
     var DEFAULT_SETTINGS = {
@@ -101,11 +100,38 @@ void function() {
 
         update: function() {
             ++this.t;
-            for (var key in this) {
-                if (key.startsWith(SAFE_UPDATE_NAME)) {
-                    this[key](this.t, $gameSwitches, $gameVariables);
+            this._updater(this.t, $gameSwitches, $gameVariables);
+        },
+
+        assignSettings: function(settings) {
+            var code = '';
+            for (var key in settings) {
+                var value = settings[key];
+                if (typeof(value) === 'string') {
+                    // this.x = (formula);
+                    // this.scale.x = (formula); // key is "scale.x"
+                    code += 'this.' + key + ' = (' + value + ');';
+                } else {
+                    // if key is "scale.x"
+                    // keys is ["scale", "x"]
+                    var keys = key.split('.');
+                    // set key to "x"
+                    key = keys.pop();
+
+                    var target = this;
+                    keys.forEach(function(k) {
+                        if (typeof(target) !== 'object') {
+                            target[k] = {};
+                        }
+                        target = target[k];
+                    });
+
+                    target[key] = value;
                 }
             }
+            // You may log the code for debugging purpose.
+            // console.log(code);
+            this._updater = new Function('t', 's', 'v', code);
         }
     };
 
@@ -123,17 +149,7 @@ void function() {
         delete settings.hue;
         delete settings.smooth;
 
-        for (var key in settings) {
-            var value = settings[key];
-
-            if (typeof(value) === 'string') {
-                // this.x = (formula)
-                var code = "this." + key + "=(" + value + ")";
-                sprite[SAFE_UPDATE_NAME + key] = new Function("t", "s", "v", code);
-            } else {
-                sprite[key] = value;
-            }
-        }
+        sprite.assignSettings(settings);
 
         return sprite;
     }
@@ -171,18 +187,21 @@ void function() {
     var ct = Spriteset_Map.prototype.createTilemap;
     Spriteset_Map.prototype.createTilemap = function() {
         ct.call(this);
-        var match;
-        while ((match = RE.exec($dataMap.note)) !== null) {
-            var settings = null;
+        $dataMap.note.replace(RE, function(_match, settings) {
+            var isValid = false;
             try {
-                settings = JSON.parse(match[1]);
+                settings = JSON.parse(settings);
+                isValid = typeof(settings) === 'object';
+                if (!isValid) {
+                    throw 'ULDS settings should be an object';
+                }
             } catch (e) {
                 console.error(e);
-                console.log(match[1]);
+                console.log(settings);
             }
-            if (settings !== null) {
+            if (isValid) {
                 this._tilemap.addChild(ULDS(settings));
             }
-        }
+        }.bind(this));
     };
 }();
