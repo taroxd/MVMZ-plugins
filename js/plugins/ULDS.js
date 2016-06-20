@@ -110,7 +110,7 @@ void function() {
                 if (typeof(value) === 'string') {
                     // this.x = (formula);
                     // this.scale.x = (formula); // key is "scale.x"
-                    code += 'this.' + key + ' = (' + value + ');';
+                    code += 'this.' + key + ' = (' + value + ');\n';
                 } else {
                     // if key is "scale.x"
                     // keys is ["scale", "x"]
