@@ -4,7 +4,7 @@
 
 /*:
  * @plugindesc Module for i18n.
- * @author Taroxd
+ * @author taroxd
  *
  * @param Default Locale
  * @desc The language used when the language detected is not supported.

@@ -7,11 +7,17 @@
  * @author taroxd
  *
  * @param Passable Regions
- * @desc Tiles are always passable in these regions. e.g. [3, 5]
+ * @desc Tiles are always passable in these regions.
+ * @type number[]
+ * @max 255
+ * @min 0
  * @default []
  *
  * @param Impassable Regions
- * @desc Tiles are always not passable in these regions. e.g. [3, 5]
+ * @desc Tiles are always not passable in these regions.
+ * @type number[]
+ * @max 255
+ * @min 0
  * @default []
  *
  * @help This plugin does not provide plugin commands.
@@ -20,8 +26,8 @@
 void function() {
 
     var parameters = PluginManager.parameters('RegionPassage');
-    var PASSABLE_REGIONS = JSON.parse(parameters['Passable Regions']);
-    var IMPASSABLE_REGIONS = JSON.parse(parameters['Impassable Regions']);
+    var PASSABLE_REGIONS = JSON.parse(parameters['Passable Regions'])
+    var IMPASSABLE_REGIONS = JSON.parse(parameters['Impassable Regions'])
 
     var REGIONS = {};
     PASSABLE_REGIONS.forEach(function(r) {

@@ -4,7 +4,7 @@
 
 /*:
  * @plugindesc Unlimited Layer Display System.
- * @author Taroxd
+ * @author taroxd
  *
  * @param Default Path
  * @desc The default path where pictures are stored.
@@ -12,6 +12,10 @@
  *
  * @param Default Z
  * @desc The default Z coordinate for sprites.
+ * @type number
+ * @decimals 2
+ * @min -15
+ * @max 15
  * @default 0.5
  *
  * @help This plugin does not provide plugin commands.

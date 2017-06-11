@@ -8,6 +8,9 @@
  *
  * @param Opacity
  * @desc No description.
+ * @type number
+ * @max 255
+ * @min 0
  * @default 150
  *
  * @param NG Color
@@ -20,10 +23,14 @@
  *
  * @param NG Width
  * @desc No description.
+ * @type number
+ * @max 24
+ * @min 0
  * @default 4
  *
  * @param Only Test
- * @desc Enable only in playtest. true/false
+ * @desc Enable only in playtest.
+ * @type Boolean
  * @default true
  *
  * @help This plugin does not provide plugin commands.
