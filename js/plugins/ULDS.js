@@ -3,6 +3,7 @@
 //=============================================================================
 
 /*:
+ * @target MZ
  * @plugindesc Unlimited Layer Display System.
  * @author taroxd
  *

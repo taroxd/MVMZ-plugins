@@ -3,6 +3,7 @@
 //=============================================================================
 
 /*:
+ * @target MZ
  * @plugindesc Display passage information in playtest.
  * @author taroxd
  *
@@ -30,7 +31,7 @@
  *
  * @param Only Test
  * @desc Enable only in playtest.
- * @type Boolean
+ * @type boolean
  * @default true
  *
  * @help This plugin does not provide plugin commands.
@@ -43,7 +44,7 @@ void function() {
     var parameters = PluginManager.parameters('DisplayPassage');
 
     var TEST_ONLY = parameters['Test Only'] !== 'false';
-    var enable = !TEST_ONLY || location.search === '?test';
+    var enable = !TEST_ONLY || Utils.isOptionValid("test");
 
     if (!enable) return;
 

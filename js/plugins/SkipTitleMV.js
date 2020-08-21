@@ -1,5 +1,5 @@
 //=============================================================================
-// SkipTitle.js
+// SkipTitleMV.js
 //=============================================================================
 
 /*:
@@ -8,16 +8,17 @@
  *
  * @param Test Only
  * @desc Whether to skip title only in playtest. true/false
+ * @type boolean
  * @default true
  *
- * @help This plugin does not provide plugin commands.
+ * @help This plugin does not provide plugin commands. RPG Maker MZ is not supported.
  */
 
 void function() {
 
     var parameters = PluginManager.parameters('SkipTitle');
     var testOnly = parameters['Test Only'] !== 'false';
-    var enable = !testOnly || location.search === '?test';
+    var enable = !testOnly || Utils.isOptionValid("test");
 
     if (enable) {
         Scene_Boot.prototype.start = function() {

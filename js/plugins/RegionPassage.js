@@ -3,6 +3,7 @@
 //=============================================================================
 
 /*:
+ * @target MZ
  * @plugindesc Provide advanced options for tile passage.
  * @author taroxd
  *
